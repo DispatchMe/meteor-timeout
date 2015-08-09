@@ -9,7 +9,7 @@ Timeout = {};
  */
 Timeout.interval = function(checkFunction, callback, options) {
   // Set timeout as ten sec pr. default
-  options = _.extend({ timeout: 10000 }, options);
+  options = _.extend({ timeout: 10000, interval: 10 }, options);
 
   var intervalId = null;
 
@@ -20,6 +20,7 @@ Timeout.interval = function(checkFunction, callback, options) {
 
   // Set check interval to every 10 ms
   intervalId = Meteor.setInterval(function() {
+    // TODO: Add try/catch
     if (checkFunction()) {
       // Clear timeout and interval
       Meteor.clearTimeout(timeoutId);
@@ -27,7 +28,7 @@ Timeout.interval = function(checkFunction, callback, options) {
 
       if (callback) callback();
     }
-  }, 10);
+  }, options.interval);
 };
 
 /**
@@ -50,6 +51,7 @@ Timeout.autorun = function(checkFunction, callback, options) {
 
   // Wait for reacitve changes in checkFunction
   computation = Meteor.autorun(function (c) {
+    // TODO: Add try/catch
     if (checkFunction(c)) {
       // Clear timeout and stop computation
       Meteor.clearTimeout(timeoutId);
@@ -57,5 +59,5 @@ Timeout.autorun = function(checkFunction, callback, options) {
 
       if (callback) callback();
     }
-  }, 10);
+  });
 };
