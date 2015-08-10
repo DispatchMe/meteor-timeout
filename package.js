@@ -1,6 +1,6 @@
 Package.describe({
   name: 'dispatch:timeout',
-  version: '0.0.1',
+  version: '0.0.2',
   summary: 'Helpers to wait for changes with a timeout.',
 });
 
