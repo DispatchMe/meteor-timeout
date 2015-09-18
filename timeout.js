@@ -50,7 +50,7 @@ Timeout.autorun = function(checkFunction, callback, options) {
   }, options.timeout);
 
   // Wait for reacitve changes in checkFunction
-  computation = Meteor.autorun(function (c) {
+  computation = Tracker.autorun(function (c) {
     // TODO: Add try/catch
     if (checkFunction(c)) {
       // Clear timeout and stop computation
