@@ -46,7 +46,7 @@ Timeout.autorun = function(checkFunction, callback, options) {
 
   var timeoutId = Meteor.setTimeout(function() {
     if (computation) computation.stop();
-    if (callback) callback(new Error('Timeout.autorun: Timed out'));
+    if (callback) callback(new Error('Timeout.autorun: Timed out'), computation);
   }, options.timeout);
 
   // Wait for reacitve changes in checkFunction
@@ -57,7 +57,7 @@ Timeout.autorun = function(checkFunction, callback, options) {
       Meteor.clearTimeout(timeoutId);
       c.stop();
 
-      if (callback) callback();
+      if (callback) callback(null, c);
     }
   });
 };
