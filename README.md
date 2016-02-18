@@ -15,7 +15,7 @@ Helpers to wait for changes with a timeout.
 
 #### Options
 * `option.interval` defaults to `10`ms
-* `option.timeout` defaults to `1000`ms
+* `option.timeout` defaults to `10000`ms
 
 #### Example
 Here we want to wait for a DOM element to exist, we test existence pr. interval.
@@ -37,7 +37,7 @@ Timeout.interval(function() {
 ### Timeout.autorun
 
 #### Options
-* `option.timeout` defaults to `1000`ms
+* `option.timeout` defaults to `10000`ms
 
 #### Example
 Wait for a reactive variable to be `true` or timeout.
