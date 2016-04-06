@@ -13,21 +13,28 @@ Timeout.interval = function(checkFunction, callback, options) {
 
   var intervalId = null;
 
-  var timeoutId = Meteor.setTimeout(function() {
+  function done(error) {
+    // Clear timeout and interval
+    if (timeoutId) Meteor.clearTimeout(timeoutId);
     if (intervalId) Meteor.clearInterval(intervalId);
-    if (callback) callback(new Error('IntervalTimeout: Timed out'));
+    if (callback) callback(error);
+  }
+
+  var timeoutId = Meteor.setTimeout(function () {
+    done(new Error('IntervalTimeout: Timed out'));
   }, options.timeout);
 
   // Set check interval to every 10 ms
   intervalId = Meteor.setInterval(function() {
-    // TODO: Add try/catch
-    if (checkFunction()) {
-      // Clear timeout and interval
-      Meteor.clearTimeout(timeoutId);
-      Meteor.clearInterval(intervalId);
+    var result = false;
 
-      if (callback) callback();
+    try {
+      result = checkFunction();
+    } catch (error) {
+      done(error);
     }
+
+    if (result) done();
   }, options.interval);
 };
 
